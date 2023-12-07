@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, FlatList, TextInput, Button, StyleSheet, Modal } from 'react-native';
 import ListItem from './components/ListItem';
-
+import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 
 
 export default function App() {
@@ -43,25 +43,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure you want to delete this item?</Text>
-            <View style={styles.dialogOptions}>
-
-              <Button title="Yes" onPress={confirmDeleteItem} />
-              <Button title="No" onPress={() => setModalVisible(false)} />
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <DeleteConfirmationModal modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        confirmDeleteItem={confirmDeleteItem}
+      />
       <TextInput
         placeholder="Add new item"
         value={inputValue}
@@ -95,29 +80,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22
   },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    width: '80%',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
-  },
-  dialogOptions: {
-    flexDirection: 'row',
-    width: '50%',
-    justifyContent: 'space-between',
-  }
 });
