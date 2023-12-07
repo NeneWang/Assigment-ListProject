@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, FlatList, TextInput, Button, StyleSheet, Modal } from 'react-native';
 import ListItem from './components/ListItem';
+import AddItem from './components/AddItem';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 
 
@@ -47,13 +48,7 @@ export default function App() {
         setModalVisible={setModalVisible}
         confirmDeleteItem={confirmDeleteItem}
       />
-      <TextInput
-        placeholder="Add new item"
-        value={inputValue}
-        onChangeText={setInputValue}
-        style={styles.input}
-      />
-      <Button title="Add Item" onPress={addItem} />
+      <AddItem inputValue={inputValue} setInputValue={setInputValue} addItem={addItem} />
       <FlatList
         data={items}
         renderItem={renderItem}
