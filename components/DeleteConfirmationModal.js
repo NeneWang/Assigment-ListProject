@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, Button, StyleSheet } from 'react-native';
 
-const DeleteConfirmationModal = ({ modalVisible, setModalVisible, confirmDeleteItem, styles }) => (
+const DeleteConfirmationModal = ({ modalVisible, setModalVisible, confirmDeleteItem }) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -24,6 +24,12 @@ const DeleteConfirmationModal = ({ modalVisible, setModalVisible, confirmDeleteI
 
 const styles = StyleSheet.create({
   
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
   modalView: {
     margin: 20,
     backgroundColor: "white",

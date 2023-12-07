@@ -74,10 +74,4 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     marginBottom: 10,
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
 });
