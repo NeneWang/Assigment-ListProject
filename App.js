@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { View, Text, FlatList, TextInput, Button, StyleSheet, Modal } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import ListItem from './components/ListItem';
 import AddItem from './components/AddItem';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
