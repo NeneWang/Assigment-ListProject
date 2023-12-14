@@ -5,6 +5,15 @@ import AddItem from './components/AddItem';
 import CardItem from './components/CardItem';
 
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
+import * as Font from 'expo-font';
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'BodoniModa': require('./assets/BodoniModa.ttf'),
+  });
+};
+
+
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -13,6 +22,16 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
 
   const [viewAsCard, setViewAsCard] = useState(false);
+  const [fontLoaded, setFontLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    fetchFonts().then(() => setFontLoaded(true));
+  }, []);
+
+
+  if (!fontLoaded) {
+    return <View><Text>Cargando...</Text></View>;
+  }
 
   const addItem = () => {
     if (inputValue.trim()) {
@@ -57,7 +76,7 @@ export default function App() {
       />
 
       <AddItem inputValue={inputValue} setInputValue={setInputValue} addItem={addItem} />
-      
+
       <View style={styles.switchContainer}>
         <Text>{viewAsCard ? 'Card View' : 'List View'}</Text>
         <Switch

@@ -47,6 +47,19 @@ const CommonStyles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
+    cardTitle: {
+        
+        fontFamily: 'BodoniModa', 
+    },
+
+    regularText: {
+        fontFamily: 'Roboto_400Regular',
+        // Other text styles
+    },
+    boldText: {
+        fontFamily: 'Roboto_700Bold',
+        // Other text styles
+    },
 });
 
 export default CommonStyles;
