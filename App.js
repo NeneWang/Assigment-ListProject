@@ -7,29 +7,20 @@ import CardItem from './components/CardItem';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 import * as Font from 'expo-font';
 
-const fetchFonts = () => {
-  return Font.loadAsync({
-    'BodoniModa': require('./assets/BodoniModa.ttf'),
-  });
-};
-
 
 
 export default function App() {
+  const [fontsLoaded] = Font.useFonts({
+    BodoniModa: require('./assets/fonts/BodoniModa.ttf'),
+  });
   const [items, setItems] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
   const [viewAsCard, setViewAsCard] = useState(false);
-  const [fontLoaded, setFontLoaded] = React.useState(false);
 
-  React.useEffect(() => {
-    fetchFonts().then(() => setFontLoaded(true));
-  }, []);
-
-
-  if (!fontLoaded) {
+  if (!fontsLoaded) {
     return <View><Text>Cargando...</Text></View>;
   }
 
