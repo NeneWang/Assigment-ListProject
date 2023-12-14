@@ -1,4 +1,5 @@
 import React from 'react'
+import CommonStyles from './CommonStyles'
 
 import { Button, TextInput, StyleSheet } from 'react-native'
 
@@ -9,7 +10,7 @@ function AddItem({ inputValue, setInputValue, addItem }) {
                 placeholder="Add new item"
                 value={inputValue}
                 onChangeText={setInputValue}
-                style={styles.input}
+                style={CommonStyles.listInput}
             />
             <Button title="Add Item" onPress={addItem} />
 
@@ -17,14 +18,5 @@ function AddItem({ inputValue, setInputValue, addItem }) {
     )
 }
 
-const styles = StyleSheet.create({
-    input: {
-        padding: 15,
-        fontSize: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgray',
-        marginBottom: 20,
-    }
-})
 
 export default AddItem

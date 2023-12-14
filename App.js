@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, Switch, Text } from 'react-native';
 import ListItem from './components/ListItem';
 import AddItem from './components/AddItem';
-import DeleteConfirmationModal from './components/DeleteConfirmationModal';
+import CardItem from './components/CardItem';
 
+import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 
 export default function App() {
   const [items, setItems] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+
+  const [viewAsCard, setViewAsCard] = useState(false);
 
   const addItem = () => {
     if (inputValue.trim()) {
@@ -41,19 +44,43 @@ export default function App() {
     <ListItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
   );
 
+  const renderCardItem = ({ item }) => (
+    <CardItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
+  );
+
+
   return (
     <View style={styles.container}>
       <DeleteConfirmationModal modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         confirmDeleteItem={confirmDeleteItem}
       />
+
       <AddItem inputValue={inputValue} setInputValue={setInputValue} addItem={addItem} />
-      <FlatList
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
-    </View>
+      
+      <View style={styles.switchContainer}>
+        <Text>{viewAsCard ? 'Card View' : 'List View'}</Text>
+        <Switch
+          value={viewAsCard}
+          onValueChange={() => setViewAsCard(previousState => !previousState)}
+        />
+      </View>
+
+      {
+        viewAsCard ?
+          <FlatList
+            data={items}
+            renderItem={renderCardItem}
+            keyExtractor={item => item.id}
+          />
+          :
+          <FlatList
+            data={items}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
+      }
+    </View >
   );
 }
 
@@ -68,4 +95,11 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     marginBottom: 10,
   },
+  switchContainer: {
+    flexDirection: 'row',
+    // Justify end
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 10,
+  }
 });
