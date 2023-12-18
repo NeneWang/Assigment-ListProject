@@ -1,115 +1,26 @@
-import React, { useState } from 'react';
-import { View, FlatList, StyleSheet, Switch, Text } from 'react-native';
-import ListItem from './components/ListItem';
-import AddItem from './components/AddItem';
-import CardItem from './components/CardItem';
 
-import DeleteConfirmationModal from './components/DeleteConfirmationModal';
-import * as Font from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+// import { HomeScreen } from './screens/HomeScreen';
+import { DetailScreen } from './screens/DetailScreen';
+import { SampleScreen } from './screens/SampleScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [fontsLoaded] = Font.useFonts({
-    BodoniModa: require('./assets/fonts/BodoniModa.ttf'),
-  });
-  const [items, setItems] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
-
-  const [viewAsCard, setViewAsCard] = useState(false);
-
-  if (!fontsLoaded) {
-    return <View><Text>Cargando...</Text></View>;
-  }
-
-  const addItem = () => {
-    if (inputValue.trim()) {
-      setItems([...items, { id: Math.random().toString(), value: inputValue, completed: false }]);
-      setInputValue('');
-    }
-  };
-
-  const deleteItem = (id) => {
-    setSelectedId(id);
-    setModalVisible(true);
-  };
-
-  const confirmDeleteItem = () => {
-    setItems(items.filter(item => item.id !== selectedId));
-    setModalVisible(false);
-  };
-
-
-  const toggleComplete = (id) => {
-    setItems(
-      items.map(item =>
-        item.id === id ? { ...item, completed: !item.completed } : item
-      )
-    );
-  };
-
-  const renderItem = ({ item }) => (
-    <ListItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
-  );
-
-  const renderCardItem = ({ item }) => (
-    <CardItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
-  );
-
-
   return (
-    <View style={styles.container}>
-      <DeleteConfirmationModal modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        confirmDeleteItem={confirmDeleteItem}
-      />
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName='Home'
 
-      <AddItem inputValue={inputValue} setInputValue={setInputValue} addItem={addItem} />
-
-      <View style={styles.switchContainer}>
-        <Text>{viewAsCard ? 'Card View' : 'List View'}</Text>
-        <Switch
-          value={viewAsCard}
-          onValueChange={() => setViewAsCard(previousState => !previousState)}
-        />
-      </View>
-
-      {
-        viewAsCard ?
-          <FlatList
-            data={items}
-            renderItem={renderCardItem}
-            keyExtractor={item => item.id}
-          />
-          :
-          <FlatList
-            data={items}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-          />
-      }
-    </View >
-  );
+      >
+        <Stack.Screen component={SampleScreen} name="Home" options={{ title: "Home" }} />
+        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="Details" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 50,
-    paddingHorizontal: 10,
-  },
-  input: {
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-    marginBottom: 10,
-  },
-  switchContainer: {
-    flexDirection: 'row',
-    // Justify end
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 10,
-  }
-});
