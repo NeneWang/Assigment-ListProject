@@ -9,7 +9,7 @@ import * as Font from 'expo-font';
 
 
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
   const [fontsLoaded] = Font.useFonts({
     BodoniModa: require('../assets/fonts/BodoniModa.ttf'),
   });
@@ -51,11 +51,11 @@ export default function HomeScreen() {
   };
 
   const renderItem = ({ item }) => (
-    <ListItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
+    <ListItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} navigation={navigation} />
   );
 
   const renderCardItem = ({ item }) => (
-    <CardItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} />
+    <CardItem item={item} toggleComplete={toggleComplete} deleteItem={deleteItem} navigation={navigation} />
   );
 
 
