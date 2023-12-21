@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// import { HomeScreen } from './screens/HomeScreen';
-import { DetailScreen } from './screens/DetailScreen';
-import { SampleScreen } from './screens/SampleScreen';
+import HomeScreen from './screens/HomeScreen';
+import SampleScreen from './screens/SampleScreen';
+import DetailScreen from './screens/DetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,8 +16,8 @@ export default function App() {
         initialRouteName='Home'
 
       >
-        <Stack.Screen component={SampleScreen} name="Home" options={{ title: "Home" }} />
-        {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen component={SampleScreen} name="Sample" options={{ title: "Home" }} />
         <Stack.Screen name="Details" component={DetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>

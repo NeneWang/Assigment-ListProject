@@ -7,7 +7,6 @@ export default function DetailsScreen({ route }) {
   return (
     <View>
       <Text>{task.title}</Text>
-      {/* Display more details of the task */}
     </View>
   );
 };
