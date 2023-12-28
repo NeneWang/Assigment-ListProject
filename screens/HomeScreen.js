@@ -7,13 +7,17 @@ import CardItem from '../components/CardItem';
 import DeleteConfirmationModal from '../components/DeleteConfirmationModal';
 import * as Font from 'expo-font';
 
+import { useSelector, useDispatch } from 'react-redux';
 
 
-export default function HomeScreen({navigation}) {
+
+
+export default function HomeScreen({ navigation }) {
   const [fontsLoaded] = Font.useFonts({
     BodoniModa: require('../assets/fonts/BodoniModa.ttf'),
   });
-  const [items, setItems] = useState([]);
+  const items = useSelector(state => state.items);
+
   const [inputValue, setInputValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -24,30 +28,28 @@ export default function HomeScreen({navigation}) {
     return <View><Text>Cargando...</Text></View>;
   }
 
+  const dispatch = useDispatch();
+
   const addItem = () => {
     if (inputValue.trim()) {
-      setItems([...items, { id: Math.random().toString(), value: inputValue, completed: false }]);
-      setInputValue('');
+      const newItem = { id: Math.random().toString(), value: inputValue, completed: false };
+      dispatch({ type: 'ADD_ITEM', payload: newItem });
     }
   };
 
   const deleteItem = (id) => {
     setSelectedId(id);
     setModalVisible(true);
-  };
+  }
 
   const confirmDeleteItem = () => {
-    setItems(items.filter(item => item.id !== selectedId));
+    dispatch({ type: 'DELETE_ITEM', payload: selectedId });
     setModalVisible(false);
   };
 
 
   const toggleComplete = (id) => {
-    setItems(
-      items.map(item =>
-        item.id === id ? { ...item, completed: !item.completed } : item
-      )
-    );
+    dispatch({ type: 'TOGGLE_COMPLETE', payload: id });
   };
 
   const renderItem = ({ item }) => (

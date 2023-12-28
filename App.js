@@ -11,6 +11,9 @@ import Header from './components/Header';
 
 import { Ionicons } from '@expo/vector-icons';
 
+import store from './store'; // Import the store
+import { Provider } from 'react-redux';
+
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -40,31 +43,33 @@ function HomeStack() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName='Home'
-        screenOptions={
-          ({route}) => (
-            {
-              header: () => <Header title={getName(route)} />,
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-    
-                if (route.name === 'Home') {
-                  iconName = focused ? 'home' : 'home-outline';
-                } else if (route.name === 'About') {
-                  iconName = focused ? 'information-circle' : 'information-circle-outline';
-                }
-    
-                return <Ionicons name={iconName} size={size} color={color} />;
-              },
-            }
-          ) 
-        }
-      >
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="About" component={AboutScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  )
+    <Provider store={store}>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName='Home'
+          screenOptions={
+            ({route}) => (
+              {
+                header: () => <Header title={getName(route)} />,
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
+          
+                  if (route.name === 'Home') {
+                    iconName = focused ? 'home' : 'home-outline';
+                  } else if (route.name === 'About') {
+                    iconName = focused ? 'information-circle' : 'information-circle-outline';
+                  }
+          
+                  return <Ionicons name={iconName} size={size} color={color} />;
+                },
+              }
+            ) 
+          }
+        >
+          <Tab.Screen name="Home" component={HomeStack} />
+          <Tab.Screen name="About" component={AboutScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
 }
