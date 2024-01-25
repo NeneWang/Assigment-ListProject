@@ -34,7 +34,9 @@ function getName(route) {
 
 function HomeStack() {
   return (
-    <Stack.Navigator initialRouteName="Camera">
+    // <Stack.Navigator initialRouteName="Camera">
+    
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Camera" component={CameraScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Sample" component={SampleScreen} />
