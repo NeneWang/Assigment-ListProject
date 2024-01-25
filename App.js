@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen';
 import SampleScreen from './screens/SampleScreen';
 import DetailScreen from './screens/DetailScreen';
 import AboutScreen from './screens/AboutScreen';
+import CameraScreen from './screens/CameraScreen';
 
 import Header from './components/Header';
 
@@ -33,7 +34,8 @@ function getName(route) {
 
 function HomeStack() {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Camera">
+      <Stack.Screen name="Camera" component={CameraScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Sample" component={SampleScreen} />
       <Stack.Screen name="Details" component={DetailScreen} />
